@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Documento sin título</title>
+	<script type="text/javascript">
+	
+		(function(){
+	
+	"use strict";
+	
+	var regalo=document.getElementById('regalo');
+	
+	document.addEventListener('DOMContentLoaded', function(){
+		
+		var pase_undia=document.getElementById('pase-1dias');
+		var pase_dosdias=document.getElementById('pase-2dias');
+		var pase_completo=document.getElementById('pase-todos-dias');
+		
+		//BOTONES Y DIVS
+		
+		var calcular=document.getElementById('calcular');
+		var error=document.getElementById('error');
+		var btnRegistro=document.getElementById('btnRegistro');
+		var listaProductos=document.getElementById('lista-productos');
+		
+		/*EXTRAS*/
+		
+		var etiquetas=document.getElementById('etiquetas');
+		var camisa_evento=document.getElementById('camisa-evento');
+		
+		
+		calcular.addEventListener('click', calcularMontos);
+		
+		function calcularMontos(event){
+			
+			event.preventDefault();
+			
+			if(regalo.value === ''){
+				
+				alert("Debes elegir un regalo");
+				regalo.focus();
+			}else{
+				
+				var boletoDia=parseInt(pase_undia.value,10) || 0,
+					boleto2Dias=parseInt(pase_dosdias.value,10) || 0,
+					boletoCompleto=parseInt(pase_completo.value,10) || 0 ,
+					cantCamisas=parseInt(camisa_evento.value,10) || 0,
+					cantEtiquetas=parseInt(etiquetas.value,10) || 0;
+				
+				var totalAPagar=(boletoDia * 30) + (boleto2Dias * 45) + (boletoCompleto * 50) + ((cantCamisas *10)* 0.93) + (cantEtiquetas * 2);
+				
+				var listadoProductos=[];
+				
+				if(boletoDia >=1){
+					
+					listadoProductos.push(boletoDia + 'Pases por un día');
+				}
+				if(boleto2Dias >= 1){
+					
+					listadoProductos.push(boleto2Dias + 'Pases por dos días');
+				}
+				if(boletoCompleto >= 1){
+					
+					listadoProductos.push(boletoCompleto + 'Pases todos los días');
+				}
+				if(cantCamisas >= 1){
+					
+					listadoProductos.push(cantCamisas+ 'Camisas');
+				}
+				if(cantEtiquetas >= 1){
+					
+					listadoProductos.push(cantEtiquetas + 'Etiquetas');
+				}
+				
+				listadoProductos.innerHTML = '';
+				
+				for(var i=0;i < listadoProductos.length;i++){
+					
+					listadoProductos.innerHTML+=listadoProductos[i] + '<br/>';
+				}
+				
+			}
+		}
+		});//DOM CONTENT LOADED
+	
+})();
+	
+	</script>
+</head>
+
+<body>
+	<form action="prueva_javascript.html" method="get">
+	<input type="number" id="pase-1dia" min="0" placeholder="0"/>
+		<input type="number" id="pase-2dia" min="0" placeholder="0"/>
+		<input type="number" id="pase-todos-dias" min="0" placeholder="0"/>
+		<input type="number" id="camisa-evento" min="0" placeholder="0"/>
+		<input type="number" id="etiquetas" min="0" placeholder="0"/>
+		<select id="regalo">
+			<option value="">--Selecciona un regalo--</option>
+			<option value="pulsera">Pulsera</option>
+			<option value="pene">Pene goma</option>
+		</select>
+		<input type="submit" id="calcular"/>
+	</form>
+	
+	<div id="lista-productos">
+	
+	</div>
+</body>
+</html>
